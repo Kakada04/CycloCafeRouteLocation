@@ -321,9 +321,9 @@ function requestUserLocation(options = {}) {
       isNearbyActive = true;
       applyDistancesToBranches();
 
-      // Ensure user sees the smooth cyclo drawing animation for a pleasant brief moment
+      // Play 1 complete cycle of our cyclo drawing animation (~3000ms / 3s) to engage the user
       const elapsed = Date.now() - startTime;
-      const minDelay = isAutoPrompt ? 0 : Math.max(0, 950 - elapsed);
+      const minDelay = isAutoPrompt ? 0 : Math.max(0, 3000 - elapsed);
 
       setTimeout(() => {
         setNearbyButtonState('active');
@@ -363,11 +363,14 @@ function showNearbyLoadingScreen() {
   const container = document.getElementById('branchGrid');
   if (!container) return;
 
+  // Cache-buster timestamp ensures the GIF animation always plays from frame 1
+  const gifUrl = `assets/image/loading/cyclo-loading.gif?t=${Date.now()}`;
+
   container.innerHTML = `
     <div class="col-span-full flex flex-col items-center justify-center py-12 sm:py-16 space-y-3.5 animate-fadeIn">
       <div class="relative w-48 sm:w-60 max-w-full aspect-[4/3] flex items-center justify-center bg-white rounded-2xl p-2 border border-zinc-100 shadow-2xs">
         <img
-          src="assets/image/loading/cyclo-loading.gif"
+          src="${gifUrl}"
           alt="CYCLO Café Loading..."
           class="w-full h-auto object-contain select-none"
         />
