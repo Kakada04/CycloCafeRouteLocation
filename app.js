@@ -9,7 +9,6 @@ let currentFilter = 'all';
 let userLocation = null; // { lat, lng }
 let isNearbyActive = false;
 let isLocating = false;
-let hasAutoRequested = false;
 
 // Obfuscated data endpoint to prevent plain-text exposure in source
 const _CONFIG = {
@@ -193,12 +192,6 @@ function handleBranchesResponse(data) {
 
     // Apply current filter and render initial view
     filterBranches(getCurrentSearchKeyword(), currentFilter);
-
-    // First time open: automatically ask user to allow location
-    if (!hasAutoRequested && 'geolocation' in navigator) {
-      hasAutoRequested = true;
-      requestUserLocation({ isAutoPrompt: true });
-    }
   } catch (err) {
     console.error('Branches parsing error:', err);
   }
@@ -292,20 +285,15 @@ function applyDistancesToBranches() {
 }
 
 // Request user location with browser geolocation API
-function requestUserLocation(options = {}) {
-  const isAutoPrompt = Boolean(options.isAutoPrompt);
-
+function requestUserLocation() {
   if (!('geolocation' in navigator)) {
-    if (!isAutoPrompt) {
-      showNotice('ឧបករណ៍របស់អ្នកមិនគាំទ្រប្រព័ន្ធ Geolocation ទេ។');
-    }
+    showNotice('ឧបករណ៍របស់អ្នកមិនគាំទ្រប្រព័ន្ធ Geolocation ទេ។');
     return;
   }
 
-  if (!isAutoPrompt) {
-    setNearbyButtonState('loading');
-    showNearbyLoadingScreen();
-  }
+  // Immediately activate button loading and render the cyclo loading animation
+  setNearbyButtonState('loading');
+  showNearbyLoadingScreen();
 
   isLocating = true;
   const startTime = Date.now();
@@ -323,7 +311,7 @@ function requestUserLocation(options = {}) {
 
       // Play 1 complete cycle of our cyclo drawing animation (~3000ms / 3s) to engage the user
       const elapsed = Date.now() - startTime;
-      const minDelay = isAutoPrompt ? 0 : Math.max(0, 3000 - elapsed);
+      const minDelay = Math.max(0, 3000 - elapsed);
 
       setTimeout(() => {
         setNearbyButtonState('active');
@@ -337,18 +325,16 @@ function requestUserLocation(options = {}) {
       isLocating = false;
       setNearbyButtonState(isNearbyActive ? 'active' : 'default');
 
-      // If user clicked manually, restore the branch grid from the loading screen
-      if (!isAutoPrompt) {
-        filterBranches(getCurrentSearchKeyword(), currentFilter);
-        if (error.code === error.PERMISSION_DENIED) {
-          showNotice('មិនអាចទទួលបានទីតាំងទេ។ សូមចុចអនុញ្ញាត Location (Allow) លើ Browser Settings របស់អ្នក ដើម្បីស្វែងរកសាខាជិតបំផុត។');
-        } else if (error.code === error.POSITION_UNAVAILABLE) {
-          showNotice('មិនអាចស្វែងរកទីតាំងរបស់អ្នកបានទេ។ សូមពិនិត្យមើល GPS ឬសេវាអ៊ីនធឺណិត។');
-        } else {
-          showNotice('ការស្វែងរកទីតាំងមានការពន្យារពេល។ សូមសាកល្បងចុចម្តងទៀត។');
-        }
+      // Restore the branch grid from the loading screen
+      filterBranches(getCurrentSearchKeyword(), currentFilter);
+
+      if (error.code === error.PERMISSION_DENIED) {
+        showNotice('មិនអាចទទួលបានទីតាំងទេ។ សូមចុចអនុញ្ញាត Location (Allow) លើ Browser Settings របស់អ្នក ដើម្បីស្វែងរកសាខាជិតបំផុត។');
+      } else if (error.code === error.POSITION_UNAVAILABLE) {
+        showNotice('មិនអាចស្វែងរកទីតាំងរបស់អ្នកបានទេ។ សូមពិនិត្យមើល GPS ឬសេវាអ៊ីនធឺណិត។');
+      } else {
+        showNotice('ការស្វែងរកទីតាំងមានការពន្យារពេល។ សូមសាកល្បងចុចម្តងទៀត។');
       }
-      // If user denied on first auto-prompt, just normal show as requested!
     },
     {
       enableHighAccuracy: true,
@@ -397,7 +383,7 @@ function handleNearbyClick() {
   }
 
   // Otherwise, request location and sort by nearby
-  requestUserLocation({ isAutoPrompt: false });
+  requestUserLocation();
 }
 
 // Reset nearby sorting back to default sheet order
