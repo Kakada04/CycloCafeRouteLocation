@@ -559,7 +559,7 @@ function renderGrid(dataList) {
         <a
           href="${item.telegram}?text=${encodeURIComponent(`សួស្តី ${item.name}! ខ្ញុំចង់កម្មង់កាហ្វេដឹកជញ្ជូន...`)}"
           target="_blank"
-          class="relative flex-1 h-10 rounded-xl sm:rounded-2xl bg-[#29A9EB] overflow-hidden border border-zinc-200/90 shadow-xs hover:shadow-md transition-all active:scale-[0.99] group flex items-center"
+          class="relative flex-1 h-10 rounded-xl sm:rounded-2xl bg-[#29A9EB] overflow-hidden border border-zinc-200/90 shadow-xs hover:shadow-md transition-all active:scale-[0.99] group flex items-center btn-telegram-shimmer"
         >
           <!-- Curved White Split Panel (Custom wave divider) -->
           <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -571,9 +571,9 @@ function renderGrid(dataList) {
             <span class="text-xs font-semibold text-zinc-600 tracking-tight">កម្មង់ Telegram</span>
           </div>
 
-          <!-- Right Icon: Centered in blue zone with official Telegram airplane -->
+          <!-- Right Icon: Centered in blue zone with official Telegram airplane & releub-releub gleam -->
           <div class="relative z-10 w-[42%] flex items-center justify-center pr-2">
-            <svg class="w-5 h-5 text-white fill-current transition-transform group-hover:scale-110 drop-shadow-xs" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 text-white fill-current transition-transform group-hover:scale-125 drop-shadow-xs telegram-icon-anim" viewBox="0 0 24 24">
               <path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/>
             </svg>
           </div>
