@@ -531,8 +531,8 @@ function renderGrid(dataList) {
     card.innerHTML = `
       <div>
         <div class="flex items-start justify-between gap-2 mb-1">
-          <h3 class="text-xs font-semibold text-zinc-900 tracking-tight leading-snug">${item.name}</h3>
-          <div class="flex items-center gap-1.5 flex-shrink-0">
+          <h3 class="text-sm sm:text-base font-semibold text-zinc-950 tracking-tight leading-snug">${item.name}</h3>
+          <div class="flex items-center gap-1.5 flex-shrink-0 pt-0.5">
             ${distanceBadge}
             ${statusBadge}
           </div>
