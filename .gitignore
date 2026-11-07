@@ -9,9 +9,14 @@ desktop.ini
 *.swp
 *.swo
 
-# Python
+# Python & Caches
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.tmp
+.cache/
+temp_frames/
+temp_frames_*/
 
 # Logs
 *.log
