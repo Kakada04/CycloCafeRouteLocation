@@ -304,9 +304,11 @@ function requestUserLocation(options = {}) {
 
   if (!isAutoPrompt) {
     setNearbyButtonState('loading');
+    showNearbyLoadingScreen();
   }
 
   isLocating = true;
+  const startTime = Date.now();
 
   navigator.geolocation.getCurrentPosition(
     position => {
@@ -318,18 +320,26 @@ function requestUserLocation(options = {}) {
 
       isNearbyActive = true;
       applyDistancesToBranches();
-      setNearbyButtonState('active');
-      dismissLocationNotice();
 
-      // Re-filter and render branches sorted by distance
-      filterBranches(getCurrentSearchKeyword(), currentFilter);
+      // Ensure user sees the smooth cyclo drawing animation for a pleasant brief moment
+      const elapsed = Date.now() - startTime;
+      const minDelay = isAutoPrompt ? 0 : Math.max(0, 950 - elapsed);
+
+      setTimeout(() => {
+        setNearbyButtonState('active');
+        dismissLocationNotice();
+
+        // Re-filter and render branches sorted by distance
+        filterBranches(getCurrentSearchKeyword(), currentFilter);
+      }, minDelay);
     },
     error => {
       isLocating = false;
       setNearbyButtonState(isNearbyActive ? 'active' : 'default');
 
-      // If user denied or error occurred during manual button click, show actionable guidance
+      // If user clicked manually, restore the branch grid from the loading screen
       if (!isAutoPrompt) {
+        filterBranches(getCurrentSearchKeyword(), currentFilter);
         if (error.code === error.PERMISSION_DENIED) {
           showNotice('មិនអាចទទួលបានទីតាំងទេ។ សូមចុចអនុញ្ញាត Location (Allow) លើ Browser Settings របស់អ្នក ដើម្បីស្វែងរកសាខាជិតបំផុត។');
         } else if (error.code === error.POSITION_UNAVAILABLE) {
@@ -346,6 +356,31 @@ function requestUserLocation(options = {}) {
       maximumAge: 60000
     }
   );
+}
+
+// Display the cyclo drawing loading animation in the branch grid area
+function showNearbyLoadingScreen() {
+  const container = document.getElementById('branchGrid');
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="col-span-full flex flex-col items-center justify-center py-12 sm:py-16 space-y-3.5 animate-fadeIn">
+      <div class="relative w-48 sm:w-60 max-w-full aspect-[4/3] flex items-center justify-center bg-white rounded-2xl p-2 border border-zinc-100 shadow-2xs">
+        <img
+          src="assets/image/loading/cyclo-loading.gif"
+          alt="CYCLO Café Loading..."
+          class="w-full h-auto object-contain select-none"
+        />
+      </div>
+      <div class="space-y-1 text-center">
+        <div class="flex items-center justify-center gap-2 text-xs font-medium text-zinc-900 tracking-tight">
+          <span class="w-1.5 h-1.5 rounded-full bg-zinc-900 animate-pulse"></span>
+          <span>កំពុងស្វែងរកសាខាដែលនៅជិតអ្នកបំផុត...</span>
+        </div>
+        <p class="text-[11px] font-light text-zinc-400">ប្រព័ន្ធកំពុងគណនាចម្ងាយ GPS និងតម្រៀបសាខាតាមចម្ងាយជិត</p>
+      </div>
+    </div>
+  `;
 }
 
 // Find Nearby button click handler
