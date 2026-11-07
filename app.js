@@ -452,9 +452,6 @@ function dismissLocationNotice() {
 
 // Update total locations counter and filter indicators in the UI
 function updateCounts(filteredCount, totalCount) {
-  const headerCount = document.getElementById('headerBranchCount');
-  if (headerCount) headerCount.textContent = totalCount;
-
   const allCountEl = document.getElementById('filterAllCount');
   if (allCountEl) allCountEl.textContent = `(${totalCount})`;
 
