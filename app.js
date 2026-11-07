@@ -103,6 +103,35 @@ function renderPromos(promoList) {
   }
 }
 
+// Helper to resolve map details from the sheet's Area column
+function getMapInfo(area, branchName) {
+  const trimmed = (area || '').trim();
+  const urlMatch = trimmed.match(/https?:\/\/[^\s]+/i);
+  const url = urlMatch ? urlMatch[0] : '';
+
+  // Extract human label if text exists, removing the URL and extra punctuation
+  let label = trimmed
+    .replace(/https?:\/\/[^\s]+/i, '')
+    .replace(/^[-–—:,|/\s]+|[-–—:,|/\s]+$/g, '')
+    .trim();
+
+  // Standard Khmer label if no custom text is provided (since Area contains the Google Maps link)
+  if (!label) {
+    label = 'មើលទីតាំងលើផែនទី';
+  }
+
+  // Determine redirect URL: use the sheet's map link or search Google Maps by branch name
+  const targetUrl = url || (branchName
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(branchName + (label !== 'មើលទីតាំងលើផែនទី' ? ' ' + label : ''))}`
+    : '');
+
+  return {
+    url: targetUrl,
+    label: label,
+    hasMap: Boolean(targetUrl)
+  };
+}
+
 function renderGrid(dataList) {
   const container = document.getElementById('branchGrid');
   if (!container) return;
@@ -123,7 +152,7 @@ function renderGrid(dataList) {
     card.className = "bg-white rounded-2xl p-4 flex flex-col justify-between border border-zinc-200/80 hover:border-zinc-300 shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all duration-200";
 
     const promoBadge = item.promo ? `
-      <div class="mt-2.5 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-zinc-100/80 border border-zinc-200/70 text-[10px] text-zinc-700 font-normal">
+      <div class="mt-2 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-zinc-100/80 border border-zinc-200/70 text-[10px] text-zinc-700 font-normal">
         <span class="w-1.5 h-1.5 rounded-full bg-zinc-800"></span>
         <span>${item.promo}</span>
       </div>
@@ -139,13 +168,32 @@ function renderGrid(dataList) {
           <span>បិទ</span>
          </span>`;
 
+    const mapInfo = getMapInfo(item.area, item.name);
+    const areaContent = mapInfo.hasMap ? `
+      <div class="mt-1.5">
+        <a
+          href="${mapInfo.url}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 text-[11px] font-normal text-zinc-600 hover:text-zinc-950 bg-zinc-50 hover:bg-zinc-100/90 border border-zinc-200/70 hover:border-zinc-300 px-2.5 py-1 rounded-lg transition-all group shadow-xs w-fit"
+          title="បើកមើលទីតាំងលើ Google Maps"
+        >
+          <i data-lucide="map-pin" class="w-3.5 h-3.5 text-zinc-400 group-hover:text-red-500 transition-colors flex-shrink-0"></i>
+          <span class="font-light">${mapInfo.label}</span>
+          <i data-lucide="arrow-up-right" class="w-3 h-3 text-zinc-400 group-hover:text-zinc-800 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0"></i>
+        </a>
+      </div>
+    ` : (item.area ? `
+      <p class="text-[11px] font-light text-zinc-500 leading-relaxed line-clamp-2 mt-1">${item.area}</p>
+    ` : '');
+
     card.innerHTML = `
       <div>
         <div class="flex items-start justify-between gap-2 mb-1">
           <h3 class="text-xs font-semibold text-zinc-900 tracking-tight">${item.name}</h3>
           ${statusBadge}
         </div>
-        <p class="text-[11px] font-light text-zinc-500 leading-relaxed line-clamp-2 mt-1">${item.area}</p>
+        ${areaContent}
         ${promoBadge}
       </div>
 
@@ -218,10 +266,12 @@ function setFilter(type) {
 }
 
 function filterBranches(keyword, filterType) {
-  let filtered = branches.filter(b =>
-    b.name.toLowerCase().includes(keyword) ||
-    b.area.toLowerCase().includes(keyword)
-  );
+  let filtered = branches.filter(b => {
+    const mapInfo = getMapInfo(b.area, b.name);
+    return b.name.toLowerCase().includes(keyword) ||
+      b.area.toLowerCase().includes(keyword) ||
+      mapInfo.label.toLowerCase().includes(keyword);
+  });
 
   if (filterType === 'open') {
     filtered = filtered.filter(b => (b.status || '').toLowerCase() === 'open');
