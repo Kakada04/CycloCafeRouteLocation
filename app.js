@@ -354,7 +354,7 @@ function showNearbyLoadingScreen() {
 
   container.innerHTML = `
     <div class="col-span-full flex flex-col items-center justify-center py-12 sm:py-16 space-y-3.5 animate-fadeIn">
-      <div class="relative w-48 sm:w-60 max-w-full aspect-[4/3] flex items-center justify-center bg-white rounded-2xl p-2 border border-zinc-100 shadow-2xs">
+      <div class="relative w-48 sm:w-60 max-w-full aspect-[4/3] flex items-center justify-center">
         <img
           src="${gifUrl}"
           alt="CYCLO Café Loading..."
