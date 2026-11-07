@@ -403,7 +403,6 @@ function setNearbyButtonState(state) {
   const btn = document.getElementById('btnFindNearby');
   const btnText = document.getElementById('nearbyBtnText');
   const btnReset = document.getElementById('btnResetSort');
-  const statusIndicator = document.getElementById('nearbyStatusIndicator');
 
   if (!btn || !btnText) return;
 
@@ -422,10 +421,6 @@ function setNearbyButtonState(state) {
       <span id="nearbyBtnText">ជិតអ្នកបំផុត</span>
     `;
     if (btnReset) btnReset.classList.remove('hidden');
-    if (statusIndicator) {
-      statusIndicator.classList.remove('hidden');
-      statusIndicator.classList.add('flex');
-    }
   } else {
     // Default state
     btn.disabled = false;
@@ -435,10 +430,6 @@ function setNearbyButtonState(state) {
       <span id="nearbyBtnText">ស្វែងរកសាខាជិតបំផុត</span>
     `;
     if (btnReset) btnReset.classList.add('hidden');
-    if (statusIndicator) {
-      statusIndicator.classList.add('hidden');
-      statusIndicator.classList.remove('flex');
-    }
   }
 
   if (window.lucide && typeof window.lucide.createIcons === 'function') {
