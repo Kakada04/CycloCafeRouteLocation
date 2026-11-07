@@ -173,11 +173,11 @@
 
       <div class="flex items-center gap-1.5 w-full sm:w-auto text-xs bg-zinc-100/70 p-1 rounded-xl border border-zinc-200/60">
         <button onclick="setFilter('all')" id="filter-all" class="filter-btn flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-[11px] font-medium bg-zinc-900 text-white shadow-xs transition flex items-center justify-center gap-1">
-          <span>ទាំងអស់</span>
+          <span>សាខាទាំងអស់</span>
           <span id="filterAllCount" class="num text-[10px] opacity-80 font-normal"></span>
         </button>
         <button onclick="setFilter('open')" id="filter-open" class="filter-btn flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-[11px] font-light text-zinc-600 hover:text-zinc-900 hover:bg-white/80 transition flex items-center justify-center gap-1">
-          <span>បើកលក់</span>
+          <span>សាខាបើកលក់</span>
           <span id="filterOpenCount" class="num text-[10px] opacity-80 font-normal"></span>
         </button>
       </div>
@@ -186,31 +186,17 @@
 
   <!-- Main Grid Content -->
   <main class="max-w-5xl mx-auto w-full px-4 sm:px-6 py-3 flex-1">
-    <!-- Location Meta & Nearby Action Bar -->
-    <div class="mb-3.5 flex flex-wrap items-center justify-between gap-2.5 bg-zinc-50/70 p-2 sm:p-2.5 rounded-2xl border border-zinc-200/80 shadow-[0_1px_4px_rgba(0,0,0,0.02)]">
-      <!-- Left: Total Location Count & Nearby Status -->
-      <div class="flex items-center gap-2 flex-wrap">
-        <div class="flex items-center gap-1.5 text-xs font-medium text-zinc-800">
-          <i data-lucide="store" class="w-3.5 h-3.5 text-zinc-600"></i>
-          <span>សាខាទាំងអស់:</span>
-        </div>
-        <span id="branchCountBadge" class="text-[11px] font-light text-zinc-600 bg-white px-2.5 py-0.5 rounded-full border border-zinc-200/80 shadow-2xs">
-          <span id="visibleBranchCount" class="num font-semibold text-zinc-900">0</span> សាខា
-        </span>
-      </div>
-
-      <!-- Right: Find Nearby Toggle Button -->
-      <div class="flex items-center gap-1.5">
-        <button
-          id="btnFindNearby"
-          onclick="handleNearbyClick()"
-          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-normal text-zinc-700 hover:text-zinc-950 bg-white hover:bg-zinc-100/80 border border-zinc-200/90 hover:border-zinc-300 shadow-2xs transition-all active:scale-[0.98]"
-          title="ស្វែងរកសាខាដែលនៅជិតអ្នកបំផុត"
-        >
-          <i id="nearbyIcon" data-lucide="locate-fixed" class="w-3.5 h-3.5 text-zinc-600 flex-shrink-0"></i>
-          <span id="nearbyBtnText">ស្វែងរកសាខាជិតបំផុត</span>
-        </button>
-      </div>
+    <!-- Nearby Action Bar -->
+    <div class="mb-3.5 flex items-center justify-end">
+      <button
+        id="btnFindNearby"
+        onclick="handleNearbyClick()"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-normal text-zinc-700 hover:text-zinc-950 bg-white hover:bg-zinc-100/80 border border-zinc-200/90 hover:border-zinc-300 shadow-2xs transition-all active:scale-[0.98]"
+        title="ស្វែងរកសាខាដែលនៅជិតអ្នកបំផុត"
+      >
+        <i id="nearbyIcon" data-lucide="locate-fixed" class="w-3.5 h-3.5 text-zinc-600 flex-shrink-0"></i>
+        <span id="nearbyBtnText">ស្វែងរកសាខាជិតបំផុត</span>
+      </button>
     </div>
 
     <!-- Notification / Permission Feedback banner (hidden by default) -->

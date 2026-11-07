@@ -455,20 +455,6 @@ function updateCounts(filteredCount, totalCount) {
   const headerCount = document.getElementById('headerBranchCount');
   if (headerCount) headerCount.textContent = totalCount;
 
-  const visibleCount = document.getElementById('visibleBranchCount');
-  if (visibleCount) visibleCount.textContent = filteredCount;
-
-  const countBadge = document.getElementById('branchCountBadge');
-  if (countBadge) {
-    const searchInput = document.getElementById('searchBox');
-    const isSearching = searchInput && searchInput.value.trim().length > 0;
-    if (isSearching || currentFilter !== 'all') {
-      countBadge.innerHTML = `<span class="num font-semibold text-zinc-900">${filteredCount}</span> នៃ <span class="num text-zinc-500">${totalCount}</span> សាខា`;
-    } else {
-      countBadge.innerHTML = `<span class="num font-semibold text-zinc-900">${totalCount}</span> សាខា`;
-    }
-  }
-
   const allCountEl = document.getElementById('filterAllCount');
   if (allCountEl) allCountEl.textContent = `(${totalCount})`;
 
