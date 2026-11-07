@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="100%" height="100%">
+  <defs>
+    <style>
+      :root {
+        --dur: 3.2s;
+      }
+      @keyframes drawCycle {
+        0% { stroke-dashoffset: 1000; }
+        70% { stroke-dashoffset: 0; }
+        90% { opacity: 1; }
+        100% { opacity: 0; stroke-dashoffset: 0; }
+      }
+      @keyframes fadeCycle {
+        0%, 55% { opacity: 0; }
+        72% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { opacity: 0; }
+      }
+      @keyframes bannerGrow {
+        0%, 65% { transform: scaleX(0); }
+        74%, 90% { transform: scaleX(1); opacity: 1; }
+        100% { opacity: 0; transform: scaleX(1); }
+      }
+      @keyframes steamRise {
+        0%, 70% { opacity: 0; transform: translateY(0); }
+        80% { opacity: 0.8; transform: translateY(-8px); }
+        92% { opacity: 0; transform: translateY(-20px); }
+        100% { opacity: 0; }
+      }
+      .draw-stroke {
+        stroke: #222224;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 1000;
+        animation: drawCycle var(--dur) cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+      }
+      .fade-el {
+        animation: fadeCycle var(--dur) ease-in-out infinite;
+      }
+      .banner-box {
+        transform-origin: 240px 78px;
+        animation: bannerGrow var(--dur) cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+      }
+      .steam-1 {
+        animation: steamRise var(--dur) ease-out infinite;
+      }
+      .steam-2 {
+        animation: steamRise var(--dur) ease-out infinite 0.2s;
+      }
+    </style>
+  </defs>
+
+  <!-- REAR WHEEL -->
+  <circle cx="132" cy="340" r="62" stroke-width="4.2" class="draw-stroke"/>
+  <circle cx="132" cy="340" r="6" fill="#222224" class="fade-el"/>
+  <line x1="132" y1="340" x2="194" y2="340" stroke-width="2.2" class="draw-stroke"/>
+  <line x1="132" y1="340" x2="70" y2="340" stroke-width="2.2" class="draw-stroke"/>
+  <line x1="132" y1="340" x2="132" y2="402" stroke-width="2.2" class="draw-stroke"/>
+  <line x1="132" y1="340" x2="132" y2="278" stroke-width="2.2" class="draw-stroke"/>
+  <line x1="132" y1="340" x2="176" y2="384" stroke-width="2.2" class="draw-stroke"/>
+  <line x1="132" y1="340" x2="88" y2="384" stroke-width="2.2" class="draw-stroke"/>
+  <line x1="132" y1="340" x2="88" y2="296" stroke-width="2.2" class="draw-stroke"/>
+  <line x1="132" y1="340" x2="176" y2="296" stroke-width="2.2" class="draw-stroke"/>
+
+  <!-- FRAME & SADDLE -->
+  <path d="M 180.0 252.0 L 178.6 253.8 L 177.0 255.8 L 175.5 257.8 L 173.8 259.8 L 172.1 262.0 L 170.4 264.2 L 168.6 266.5 L 166.8 268.9 L 165.0 271.4 L 163.1 273.9 L 161.2 276.5 L 159.4 279.2 L 157.5 282.0 L 155.6 284.8 L 153.8 287.8 L 151.9 290.7 L 150.1 293.8 L 148.3 296.9 L 146.6 300.1 L 144.9 303.4 L 143.2 306.8 L 141.7 310.2 L 140.2 313.7 L 138.7 317.2 L 137.4 320.8 L 136.1 324.5 L 134.9 328.3 L 133.8 332.1 L 132.9 336.0 L 132.0 340.0" stroke-width="4.0" class="draw-stroke"/>
+  <line x1="180" y1="252" x2="202" y2="340" stroke-width="4.0" class="draw-stroke"/>
+  <line x1="178" y1="242" x2="180" y2="252" stroke-width="4.0" class="draw-stroke"/>
+  <path d="M 148.0 232.0 L 150.0 224.0 L 165.0 220.0 L 185.0 220.0 L 206.0 222.0 L 208.0 226.0 L 202.0 233.0 L 180.0 240.0 L 160.0 242.0 L 148.0 232.0 Z" stroke-width="2.0" class="draw-stroke"/>
+  <path d="M 148 232 C 150 224, 172 220, 206 222 C 210 223, 212 228, 204 233 C 190 240, 172 242, 154 242 C 148 242, 146 236, 148 232 Z" fill="#222224" class="fade-el"/>
+
+  <!-- CHAINRING & PEDAL -->
+  <circle cx="202" cy="340" r="15" stroke-width="2.2" class="draw-stroke"/>
+  <circle cx="202" cy="340" r="3.5" fill="#222224" class="fade-el"/>
+  <line x1="202" y1="325" x2="202" y2="355" stroke-width="2.0" class="draw-stroke"/>
+  <line x1="187" y1="340" x2="217" y2="340" stroke-width="2.0" class="draw-stroke"/>
+  <line x1="202" y1="340" x2="190" y2="362" stroke-width="3.2" class="draw-stroke"/>
+  <line x1="182" y1="362" x2="198" y2="362" stroke-width="4.0" class="draw-stroke"/>
+
+  <!-- FRAME CONNECTORS -->
+  <line x1="194" y1="300" x2="280" y2="300" stroke-width="3.8" class="draw-stroke"/>
+  <path d="M 191.0 285.0 L 192.4 287.0 L 193.9 289.2 L 195.5 291.3 L 197.2 293.6 L 199.0 295.9 L 200.8 298.2 L 202.7 300.6 L 204.7 302.9 L 206.8 305.3 L 209.0 307.7 L 211.3 310.1 L 213.7 312.4 L 216.2 314.7 L 218.8 317.0 L 221.5 319.2 L 224.3 321.4 L 227.2 323.5 L 230.2 325.5 L 233.4 327.5 L 236.6 329.3 L 240.0 331.0 L 243.5 332.6 L 247.1 334.1 L 250.8 335.4 L 254.7 336.6 L 258.7 337.7 L 262.8 338.5 L 267.1 339.2 L 271.5 339.7 L 276.0 340.0" stroke-width="3.8" class="draw-stroke"/>
+  <line x1="132" y1="340" x2="520" y2="340" stroke-width="4.0" class="draw-stroke"/>
+
+  <!-- CART TYPOGRAPHY "CYCLO" -->
+  <path d="M 306.0 242.0 L 280.0 242.0 L 280.0 242.0 L 278.5 242.3 L 277.1 243.1 L 275.7 244.4 L 274.3 246.2 L 273.0 248.6 L 271.8 251.4 L 270.6 254.6 L 269.6 258.2 L 268.7 262.2 L 267.9 266.5 L 267.2 271.1 L 266.7 275.9 L 266.3 280.8 L 266.1 285.9 L 266.0 291.0 L 266.1 296.1 L 266.3 301.2 L 266.7 306.1 L 267.2 310.9 L 267.9 315.5 L 268.7 319.8 L 269.6 323.8 L 270.6 327.4 L 271.8 330.6 L 273.0 333.4 L 274.3 335.8 L 275.7 337.6 L 277.1 338.9 L 278.5 339.7 L 280.0 340.0 L 306.0 340.0" stroke-width="4.0" class="draw-stroke"/>
+  <path d="M 314 242 L 333 282 L 352 242" stroke-width="4.0" class="draw-stroke"/>
+  <line x1="333" y1="282" x2="333" y2="340" stroke-width="4.0" class="draw-stroke"/>
+  <path d="M 400.0 242.0 L 374.0 242.0 L 374.0 242.0 L 372.5 242.3 L 371.1 243.1 L 369.7 244.4 L 368.3 246.2 L 367.0 248.6 L 365.8 251.4 L 364.6 254.6 L 363.6 258.2 L 362.7 262.2 L 361.9 266.5 L 361.2 271.1 L 360.7 275.9 L 360.3 280.8 L 360.1 285.9 L 360.0 291.0 L 360.1 296.1 L 360.3 301.2 L 360.7 306.1 L 361.2 310.9 L 361.9 315.5 L 362.7 319.8 L 363.6 323.8 L 364.6 327.4 L 365.8 330.6 L 367.0 333.4 L 368.3 335.8 L 369.7 337.6 L 371.1 338.9 L 372.5 339.7 L 374.0 340.0 L 400.0 340.0" stroke-width="4.0" class="draw-stroke"/>
+  <path d="M 426 242 L 426 340 L 450 340" stroke-width="4.0" class="draw-stroke"/>
+  <path d="M 487.0 242.0 L 489.3 242.6 L 491.6 244.4 L 493.8 247.3 L 495.8 251.4 L 497.6 256.4 L 499.1 262.2 L 500.4 268.8 L 501.3 275.9 L 501.8 283.3 L 502.0 291.0 L 501.8 298.7 L 501.3 306.1 L 500.4 313.2 L 499.1 319.8 L 497.6 325.6 L 495.8 330.6 L 493.8 334.7 L 491.6 337.6 L 489.3 339.4 L 487.0 340.0 L 484.7 339.4 L 482.4 337.6 L 480.2 334.7 L 478.2 330.6 L 476.4 325.6 L 474.9 319.8 L 473.6 313.2 L 472.7 306.1 L 472.2 298.7 L 472.0 291.0 L 472.2 283.3 L 472.7 275.9 L 473.6 268.8 L 474.9 262.2 L 476.4 256.4 L 478.2 251.4 L 480.2 247.3 L 482.4 244.4 L 484.7 242.6 L 487.0 242.0 Z" stroke-width="4.0" class="draw-stroke"/>
+
+  <!-- FRONT WHEEL -->
+  <circle cx="400" cy="340" r="62" stroke-width="4.2" class="draw-stroke"/>
+  <circle cx="400" cy="340" r="6" fill="#222224" class="fade-el"/>
+  <line x1="400" y1="340" x2="462" y2="340" stroke-width="2.2" class="draw-stroke"/>
+  <line x1="400" y1="340" x2="338" y2="340" stroke-width="2.2" class="draw-stroke"/>
+  <line x1="400" y1="340" x2="400" y2="278" stroke-width="2.2" class="draw-stroke"/>
+  <line x1="400" y1="340" x2="400" y2="402" stroke-width="2.2" class="draw-stroke"/>
+  <line x1="400" y1="340" x2="444" y2="296" stroke-width="2.2" class="draw-stroke"/>
+  <line x1="400" y1="340" x2="356" y2="384" stroke-width="2.2" class="draw-stroke"/>
+  <line x1="400" y1="340" x2="444" y2="384" stroke-width="2.2" class="draw-stroke"/>
+  <line x1="400" y1="340" x2="356" y2="296" stroke-width="2.2" class="draw-stroke"/>
+
+  <!-- TABLE COUNTER -->
+  <line x1="278" y1="228" x2="520" y2="228" stroke-width="4.0" class="draw-stroke"/>
+  <line x1="278" y1="240" x2="520" y2="240" stroke-width="4.0" class="draw-stroke"/>
+  <line x1="278" y1="228" x2="278" y2="240" stroke-width="4.0" class="draw-stroke"/>
+  <line x1="520" y1="228" x2="520" y2="240" stroke-width="4.0" class="draw-stroke"/>
+  <line x1="520" y1="240" x2="550" y2="240" stroke-width="4.0" class="draw-stroke"/>
+
+  <!-- ITEMS ON COUNTER -->
+  <path d="M 286.0 226.0 L 286.0 218.0 L 286.0 218.0 L 286.2 215.3 L 286.8 212.6 L 287.9 210.0 L 289.3 207.4 L 291.1 205.0 L 293.3 202.7 L 295.8 200.6 L 298.6 198.7 L 301.7 197.0 L 305.0 195.5 L 308.5 194.2 L 312.3 193.3 L 316.1 192.6 L 320.0 192.1 L 324.0 192.0 L 328.0 192.1 L 331.9 192.6 L 335.7 193.3 L 339.5 194.2 L 343.0 195.5 L 346.3 197.0 L 349.4 198.7 L 352.2 200.6 L 354.7 202.7 L 356.9 205.0 L 358.7 207.4 L 360.1 210.0 L 361.2 212.6 L 361.8 215.3 L 362.0 218.0 L 362.0 226.0" stroke-width="3.0" class="draw-stroke"/>
+  <line x1="288" y1="210" x2="360" y2="210" stroke-width="2.0" class="draw-stroke"/>
+
+  <path d="M 376 226 L 376 196 L 398 196 L 398 226" stroke-width="2.5" class="draw-stroke"/>
+  <path d="M 376 202 C 368 202, 368 214, 376 214" stroke-width="2.0" class="draw-stroke"/>
+  <circle cx="387" cy="208" r="3.0" fill="#222224" class="fade-el"/>
+  <line x1="387" y1="186" x2="387" y2="196" stroke-width="2.5" class="draw-stroke"/>
+  <line x1="382" y1="186" x2="392" y2="186" stroke-width="2.5" class="draw-stroke"/>
+  <rect x="402" y="208" width="6" height="18" rx="1" fill="#222224" class="fade-el"/>
+
+  <!-- Espresso Machine -->
+  <path d="M 432 226 L 432 140 L 486 140 L 486 226" stroke-width="3.5" class="draw-stroke"/>
+  <line x1="430" y1="133" x2="488" y2="133" stroke-width="2.5" class="draw-stroke"/>
+  <path d="M 440 133 C 440 127, 452 127, 452 133" stroke-width="2.0" class="draw-stroke"/>
+  <path d="M 460 133 C 460 127, 472 127, 472 133" stroke-width="2.0" class="draw-stroke"/>
+  <line x1="432" y1="166" x2="486" y2="166" stroke-width="2.5" class="draw-stroke"/>
+  <path d="M 442 166 L 448 180 L 458 180 L 462 166" stroke-width="2.5" class="draw-stroke"/>
+  <line x1="480" y1="172" x2="498" y2="194" stroke-width="4.0" class="draw-stroke"/>
+  <rect x="494" y="190" width="5" height="10" rx="1.5" transform="rotate(-40 496 195)" fill="#222224" class="fade-el"/>
+  <line x1="460" y1="188" x2="460" y2="206" stroke-width="3.5" class="draw-stroke"/>
+  <line x1="432" y1="216" x2="486" y2="216" stroke-width="2.5" class="draw-stroke"/>
+
+  <!-- CANOPY SUPPORT POLES -->
+  <line x1="280" y1="228" x2="280" y2="96" stroke-width="4.0" class="draw-stroke"/>
+  <line x1="486" y1="228" x2="486" y2="96" stroke-width="4.0" class="draw-stroke"/>
+
+  <!-- AWNING SCALLOPS -->
+  <path d="
+    M 240 96
+    C 240 106, 264 106, 264 96
+    C 264 106, 288 106, 288 96
+    C 288 106, 312 106, 312 96
+    C 312 106, 336 106, 336 96
+    C 336 106, 360 106, 360 96
+    C 360 106, 384 106, 384 96
+    C 384 106, 408 106, 408 96
+    C 408 106, 432 106, 432 96
+    C 432 106, 456 106, 456 96
+    C 456 106, 480 106, 480 96
+    C 480 106, 504 106, 504 96
+    C 504 106, 528 106, 528 96
+    C 528 106, 552 106, 552 96
+    Z" fill="#222224" stroke="#222224" stroke-width="1.5" class="fade-el"/>
+
+  <!-- BANNER BOX & TEXT -->
+  <rect x="240" y="60" width="312" height="36" fill="#222224" class="banner-box"/>
+  <text x="396" y="87" text-anchor="middle" font-family="'Montserrat', 'Arial Black', sans-serif" font-weight="700" font-size="28" fill="#FFFFFF" letter-spacing="3" class="fade-el">CYCLO Café</text>
+
+  <!-- COFFEE STEAM -->
+  <path d="M 446 125 Q 441 116, 447 107 T 445 97" stroke="#71717A" stroke-width="2.2" stroke-linecap="round" fill="none" class="steam-1"/>
+  <path d="M 466 125 Q 471 116, 465 107 T 467 97" stroke="#71717A" stroke-width="2.2" stroke-linecap="round" fill="none" class="steam-2"/>
+</svg>

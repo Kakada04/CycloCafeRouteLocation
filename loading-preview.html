@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CYCLO Café - Loading Animation Preview & Asset Hub</title>
+  <link rel="icon" type="image/jpeg" href="assets/image/logo/CycloCafeLogo.jpg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Kantumruy+Pro:wght@300;400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Montserrat', 'Kantumruy Pro', sans-serif; }
+    .mono { font-family: 'Roboto Mono', monospace; }
+  </style>
+</head>
+<body class="bg-zinc-50 text-zinc-900 min-h-screen flex flex-col antialiased">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-zinc-200/80 sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2 text-sm font-semibold text-zinc-900 hover:text-zinc-600 transition">
+          <img src="assets/image/logo/CycloCafeLogo-wordmark.png" alt="CYCLO Café" class="h-7 w-auto object-contain">
+          <span class="text-xs px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-600 border border-zinc-200">Loading Assets</span>
+        </a>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="index.html" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-lg transition">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+          <span>Back to App</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full space-y-8">
+    <!-- Intro Banner -->
+    <div class="bg-white border border-zinc-200 rounded-2xl p-6 sm:p-8 shadow-xs">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 mb-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>Rendered with FFmpeg 7.1 • Hand-Drawn Stroke Animation</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950">CYCLO Café Animated Loading Screen</h1>
+          <p class="text-xs sm:text-sm text-zinc-500 mt-1 max-w-2xl font-normal">
+            Custom-crafted line-drawing animation replicating the iconic CYCLO coffee cart logo from scratch. Includes optimized GIF, MP4 video, WebM, and vector SVG.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <a href="assets/image/loading/cyclo-loading.gif" download class="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-xl shadow-xs transition">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Download GIF (110 KB)</span>
+          </a>
+          <a href="assets/image/loading/cyclo-loading.mp4" download class="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-xl transition">
+            <i data-lucide="video" class="w-3.5 h-3.5"></i>
+            <span>Download MP4 (39 KB)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Asset Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- 1. Optimized GIF (Recommended for Web & App) -->
+      <div class="bg-white border border-zinc-200 rounded-2xl p-6 flex flex-col justify-between shadow-xs">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <span class="text-[10px] font-mono uppercase tracking-wider text-zinc-400 font-semibold">Format #1 • Recommended</span>
+              <h2 class="text-base font-semibold text-zinc-900 flex items-center gap-2">
+                <span>Optimized Small GIF</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-zinc-900 text-white font-mono">110 KB</span>
+              </h2>
+            </div>
+            <span class="text-xs text-zinc-500 font-mono">360 × 270 px</span>
+          </div>
+
+          <div class="bg-zinc-50 border border-zinc-200/80 rounded-xl p-4 flex items-center justify-center min-h-[260px]">
+            <img src="assets/image/loading/cyclo-loading.gif" alt="CYCLO Animated Loading GIF" class="max-w-full h-auto object-contain">
+          </div>
+
+          <div class="mt-4 space-y-1.5 text-xs text-zinc-600">
+            <div class="flex items-center justify-between">
+              <span class="text-zinc-400">Palette Optimization:</span>
+              <span class="font-mono text-zinc-800">2-Pass Palettegen (64 colors)</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-zinc-400">Framerate:</span>
+              <span class="font-mono text-zinc-800">25 FPS • 3.2s Loop</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-zinc-400">Compatibility:</span>
+              <span class="text-emerald-600 font-medium">Universal (Web, iOS, Android)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5 pt-4 border-t border-zinc-100 flex items-center justify-between">
+          <code class="text-[11px] font-mono text-zinc-500 truncate max-w-[220px]">assets/image/loading/cyclo-loading.gif</code>
+          <a href="assets/image/loading/cyclo-loading.gif" download class="inline-flex items-center gap-1 text-xs font-medium text-zinc-900 hover:text-zinc-600">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Save</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 2. Transparent GIF -->
+      <div class="bg-white border border-zinc-200 rounded-2xl p-6 flex flex-col justify-between shadow-xs">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <span class="text-[10px] font-mono uppercase tracking-wider text-zinc-400 font-semibold">Format #2 • Dark / Overlay Mode</span>
+              <h2 class="text-base font-semibold text-zinc-900 flex items-center gap-2">
+                <span>Transparent Background GIF</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-800 border border-zinc-200 font-mono">300 KB</span>
+              </h2>
+            </div>
+            <span class="text-xs text-zinc-500 font-mono">360 × 270 px</span>
+          </div>
+
+          <!-- Checkerboard / Colored Preview -->
+          <div class="bg-zinc-100 border border-zinc-200/80 rounded-xl p-4 flex items-center justify-center min-h-[260px] relative overflow-hidden" style="background-image: radial-gradient(#d4d4d8 1px, transparent 1px); background-size: 16px 16px;">
+            <img src="assets/image/loading/cyclo-loading-transparent.gif" alt="CYCLO Transparent GIF" class="max-w-full h-auto object-contain">
+          </div>
+
+          <div class="mt-4 space-y-1.5 text-xs text-zinc-600">
+            <div class="flex items-center justify-between">
+              <span class="text-zinc-400">Background:</span>
+              <span class="font-mono text-zinc-800">100% Alpha Transparent</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-zinc-400">Best For:</span>
+              <span class="text-zinc-800 font-medium">Modals, overlays, colored themes</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-zinc-400">Framerate:</span>
+              <span class="font-mono text-zinc-800">25 FPS • 3.2s Loop</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5 pt-4 border-t border-zinc-100 flex items-center justify-between">
+          <code class="text-[11px] font-mono text-zinc-500 truncate max-w-[220px]">cyclo-loading-transparent.gif</code>
+          <a href="assets/image/loading/cyclo-loading-transparent.gif" download class="inline-flex items-center gap-1 text-xs font-medium text-zinc-900 hover:text-zinc-600">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Save</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 3. HD MP4 Video -->
+      <div class="bg-white border border-zinc-200 rounded-2xl p-6 flex flex-col justify-between shadow-xs">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <span class="text-[10px] font-mono uppercase tracking-wider text-zinc-400 font-semibold">Format #3 • Ultra Small File</span>
+              <h2 class="text-base font-semibold text-zinc-900 flex items-center gap-2">
+                <span>MP4 Video (H.264)</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-600 text-white font-mono">39 KB</span>
+              </h2>
+            </div>
+            <span class="text-xs text-zinc-500 font-mono">480 × 360 px</span>
+          </div>
+
+          <div class="bg-zinc-50 border border-zinc-200/80 rounded-xl p-4 flex items-center justify-center min-h-[260px]">
+            <video autoplay loop muted playsinline class="max-w-full h-auto rounded-lg">
+              <source src="assets/image/loading/cyclo-loading.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="mt-4 space-y-1.5 text-xs text-zinc-600">
+            <div class="flex items-center justify-between">
+              <span class="text-zinc-400">Codec:</span>
+              <span class="font-mono text-zinc-800">H.264 (libx264, yuv420p)</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-zinc-400">Resolution & FPS:</span>
+              <span class="font-mono text-zinc-800">480x360 @ 30 FPS</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-zinc-400">File Size Efficiency:</span>
+              <span class="text-emerald-600 font-medium">Ultra lightweight (39 KB)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5 pt-4 border-t border-zinc-100 flex items-center justify-between">
+          <code class="text-[11px] font-mono text-zinc-500 truncate max-w-[220px]">assets/image/loading/cyclo-loading.mp4</code>
+          <a href="assets/image/loading/cyclo-loading.mp4" download class="inline-flex items-center gap-1 text-xs font-medium text-zinc-900 hover:text-zinc-600">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Save</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 4. Interactive Vector SVG -->
+      <div class="bg-white border border-zinc-200 rounded-2xl p-6 flex flex-col justify-between shadow-xs">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <span class="text-[10px] font-mono uppercase tracking-wider text-zinc-400 font-semibold">Format #4 • Infinite Sharpness</span>
+              <h2 class="text-base font-semibold text-zinc-900 flex items-center gap-2">
+                <span>Vector SVG (CSS Keyframes)</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-600 text-white font-mono">11 KB</span>
+              </h2>
+            </div>
+            <span class="text-xs text-zinc-500 font-mono">Vector / Scalable</span>
+          </div>
+
+          <div class="bg-zinc-50 border border-zinc-200/80 rounded-xl p-4 flex items-center justify-center min-h-[260px]">
+            <img src="assets/image/loading/cyclo-loading.svg" alt="CYCLO Vector SVG" class="max-w-full h-auto object-contain">
+          </div>
+
+          <div class="mt-4 space-y-1.5 text-xs text-zinc-600">
+            <div class="flex items-center justify-between">
+              <span class="text-zinc-400">Technology:</span>
+              <span class="font-mono text-zinc-800">Pure SVG + CSS stroke-dashoffset</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-zinc-400">Resolution:</span>
+              <span class="text-zinc-800 font-medium">Infinite (0 pixelation at 4K)</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-zinc-400">Framerate:</span>
+              <span class="text-emerald-600 font-medium">Native Monitor Rate (60/120Hz)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5 pt-4 border-t border-zinc-100 flex items-center justify-between">
+          <code class="text-[11px] font-mono text-zinc-500 truncate max-w-[220px]">assets/image/loading/cyclo-loading.svg</code>
+          <a href="assets/image/loading/cyclo-loading.svg" download class="inline-flex items-center gap-1 text-xs font-medium text-zinc-900 hover:text-zinc-600">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Save</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Live Demonstration in Action -->
+    <div class="bg-white border border-zinc-200 rounded-2xl p-6 sm:p-8 shadow-xs">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-lg font-semibold text-zinc-900">How It Appears in CYCLO Café UI</h2>
+          <p class="text-xs text-zinc-500">Live preview of the loading screen card used in the delivery hub application</p>
+        </div>
+        <button onclick="triggerReloadDemo()" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-zinc-700 bg-zinc-100 hover:bg-zinc-200 rounded-xl transition active:scale-95">
+          <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+          <span>Replay Animation</span>
+        </button>
+      </div>
+
+      <div class="max-w-md mx-auto bg-zinc-50/80 border border-zinc-200 rounded-2xl p-8 flex flex-col items-center justify-center text-center space-y-4 shadow-2xs">
+        <div class="w-56 aspect-[4/3] flex items-center justify-center bg-white rounded-2xl p-2 border border-zinc-200/60 shadow-2xs">
+          <img id="demoImg" src="assets/image/loading/cyclo-loading.gif" alt="CYCLO Loading" class="w-full h-auto object-contain">
+        </div>
+        <div class="space-y-1">
+          <div class="flex items-center justify-center gap-2 text-xs font-medium text-zinc-800">
+            <span class="w-1.5 h-1.5 rounded-full bg-zinc-900 animate-pulse"></span>
+            <span>កំពុងទាញទិន្នន័យសាខា...</span>
+          </div>
+          <div class="text-[11px] font-light text-zinc-400">CYCLO Café • Delivery Hub & Branch Finder</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Code Snippets for Developers -->
+    <div class="bg-white border border-zinc-200 rounded-2xl p-6 sm:p-8 shadow-xs space-y-4">
+      <h2 class="text-lg font-semibold text-zinc-900">Embed Snippets</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- HTML GIF Embed -->
+        <div class="bg-zinc-900 rounded-xl p-4 text-white">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-mono text-zinc-400">HTML (GIF Loading)</span>
+            <span class="text-[10px] text-emerald-400 font-mono">110 KB</span>
+          </div>
+          <pre class="text-xs font-mono text-zinc-300 overflow-x-auto p-2 bg-zinc-950 rounded-lg"><code>&lt;img 
+  src="assets/image/loading/cyclo-loading.gif" 
+  alt="Loading CYCLO..." 
+  class="w-48 h-auto object-contain" 
+/&gt;</code></pre>
+        </div>
+
+        <!-- Video Embed -->
+        <div class="bg-zinc-900 rounded-xl p-4 text-white">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-mono text-zinc-400">HTML (MP4 Video Loading)</span>
+            <span class="text-[10px] text-emerald-400 font-mono">39 KB</span>
+          </div>
+          <pre class="text-xs font-mono text-zinc-300 overflow-x-auto p-2 bg-zinc-950 rounded-lg"><code>&lt;video autoplay loop muted playsinline 
+  class="w-48 h-auto"&gt;
+  &lt;source src="assets/image/loading/cyclo-loading.mp4" type="video/mp4"&gt;
+&lt;/video&gt;</code></pre>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-t border-zinc-200/80 py-6 text-center text-xs text-zinc-400 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+      CYCLO Café Loading Assets • Rendered via FFmpeg 7.1 Essentials Build
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    function triggerReloadDemo() {
+      const img = document.getElementById('demoImg');
+      const src = img.src.split('?')[0];
+      img.src = src + '?t=' + new Date().getTime();
+    }
+  </script>
+</body>
+</html>
