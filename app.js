@@ -593,15 +593,20 @@ function handleSearch() {
 
 function setFilter(type) {
   currentFilter = type;
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.classList.remove('bg-zinc-900', 'text-white', 'font-medium', 'shadow-xs');
-    btn.classList.add('text-zinc-600', 'font-light');
-  });
+  const btnAll = document.getElementById('filter-all');
+  const btnOpen = document.getElementById('filter-open');
+  if (!btnAll || !btnOpen) return;
 
-  const activeBtn = document.getElementById(`filter-${type}`);
-  if (activeBtn) {
-    activeBtn.classList.remove('text-zinc-600', 'font-light');
-    activeBtn.classList.add('bg-zinc-900', 'text-white', 'font-medium', 'shadow-xs');
+  const baseClasses = 'filter-btn flex-1 sm:flex-none px-3.5 py-1.5 rounded-lg text-[11px] transition flex items-center justify-center gap-1';
+  const activeClass = `${baseClasses} font-medium bg-zinc-900 text-white shadow-xs`;
+  const inactiveClass = `${baseClasses} font-light text-zinc-600 hover:text-zinc-900 hover:bg-white/80`;
+
+  if (type === 'all') {
+    btnAll.className = activeClass;
+    btnOpen.className = inactiveClass;
+  } else {
+    btnOpen.className = activeClass;
+    btnAll.className = inactiveClass;
   }
 
   filterBranches(getCurrentSearchKeyword(), currentFilter);
