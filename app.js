@@ -383,11 +383,17 @@ function showNearbyLoadingScreen() {
   `;
 }
 
-// Find Nearby button click handler
+// Find Nearby button click handler (toggles between Nearby sort and Default order)
 function handleNearbyClick() {
   if (isLocating) return;
 
-  // Ask user to allow location again or toggle nearby sorting
+  // If already active, clicking unticks and returns to default order
+  if (isNearbyActive) {
+    resetNearbySort();
+    return;
+  }
+
+  // Otherwise, request location and sort by nearby
   requestUserLocation({ isAutoPrompt: false });
 }
 
@@ -402,12 +408,12 @@ function resetNearbySort() {
 function setNearbyButtonState(state) {
   const btn = document.getElementById('btnFindNearby');
   const btnText = document.getElementById('nearbyBtnText');
-  const btnReset = document.getElementById('btnResetSort');
 
   if (!btn || !btnText) return;
 
   if (state === 'loading') {
     btn.disabled = true;
+    btn.title = "កំពុងស្វែងរកទីតាំង...";
     btn.className = "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-normal text-zinc-500 bg-zinc-100 border border-zinc-200 cursor-wait shadow-2xs transition-all";
     btn.innerHTML = `
       <div class="w-3.5 h-3.5 border-[1.5px] border-zinc-500 border-t-transparent rounded-full animate-spin flex-shrink-0"></div>
@@ -415,21 +421,21 @@ function setNearbyButtonState(state) {
     `;
   } else if (state === 'active') {
     btn.disabled = false;
+    btn.title = "ចុចម្តងទៀតដើម្បីដោះធីក (Untick) និងត្រឡប់ទៅការតម្រៀបដើម";
     btn.className = "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 border border-zinc-900 shadow-xs transition-all active:scale-[0.98]";
     btn.innerHTML = `
       <i data-lucide="check" class="w-3.5 h-3.5 text-white flex-shrink-0"></i>
       <span id="nearbyBtnText">ជិតអ្នកបំផុត</span>
     `;
-    if (btnReset) btnReset.classList.remove('hidden');
   } else {
     // Default state
     btn.disabled = false;
+    btn.title = "ស្វែងរកសាខាដែលនៅជិតអ្នកបំផុត";
     btn.className = "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-normal text-zinc-700 hover:text-zinc-950 bg-white hover:bg-zinc-100/80 border border-zinc-200/90 hover:border-zinc-300 shadow-2xs transition-all active:scale-[0.98]";
     btn.innerHTML = `
       <i id="nearbyIcon" data-lucide="locate-fixed" class="w-3.5 h-3.5 text-zinc-600 flex-shrink-0"></i>
       <span id="nearbyBtnText">ស្វែងរកសាខាជិតបំផុត</span>
     `;
-    if (btnReset) btnReset.classList.add('hidden');
   }
 
   if (window.lucide && typeof window.lucide.createIcons === 'function') {
