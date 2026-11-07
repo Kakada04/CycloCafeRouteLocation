@@ -59,12 +59,12 @@
       animation: fadeIn 0.25s ease-out forwards;
     }
 
-    /* Glossy Shimmer / Releub-Releub (រលើបៗ) Effect for Telegram Button */
+    /* Glossy Shimmer / Releub-Releub (រលើបៗ) Effect for Telegram Button (Slow & Elegant) */
     @keyframes shimmerSweep {
       0% {
         transform: translateX(-160%) skewX(-25deg);
       }
-      22%, 100% {
+      30%, 100% {
         transform: translateX(320%) skewX(-25deg);
       }
     }
@@ -77,35 +77,35 @@
       position: absolute;
       top: -20%;
       left: -20%;
-      width: 50%;
+      width: 55%;
       height: 140%;
       background: linear-gradient(
         90deg,
         rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.45) 50%,
+        rgba(255, 255, 255, 0.38) 50%,
         rgba(255, 255, 255, 0) 100%
       );
       transform: translateX(-160%) skewX(-25deg);
-      animation: shimmerSweep 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      animation: shimmerSweep 5.5s cubic-bezier(0.25, 1, 0.5, 1) infinite;
       pointer-events: none;
       z-index: 15;
     }
     @keyframes telegramIconGleam {
       0%, 100% {
         transform: scale(1) rotate(0deg);
-        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.12));
       }
-      12% {
-        transform: scale(1.18) rotate(-4deg);
-        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.95)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+      15% {
+        transform: scale(1.12) rotate(-3deg);
+        filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.9)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
       }
-      24% {
+      30% {
         transform: scale(1) rotate(0deg);
-        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.12));
       }
     }
     .telegram-icon-anim {
-      animation: telegramIconGleam 3.2s ease-in-out infinite;
+      animation: telegramIconGleam 5.5s ease-in-out infinite;
     }
   </style>
 </head>
