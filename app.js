@@ -217,13 +217,18 @@ function handleBranchesResponse(data) {
         if (!isNaN(parsed) && parsed !== 0) rowLng = parsed;
       }
 
+      let rawPhone = getVal(phoneIdx);
+      if (rawPhone && /^[1-9][0-9]{7,8}$/.test(rawPhone.trim())) {
+        rawPhone = '0' + rawPhone.trim();
+      }
+
       const b = {
         id: idx + 1,
         name: getVal(nameIdx),
         district: getVal(districtIdx),
         area: getVal(areaIdx),
         telegram: getVal(tgIdx) || '#',
-        phone: getVal(phoneIdx),
+        phone: rawPhone,
         promo: getVal(promoIdx),
         status: getVal(statusIdx) || 'Open',
         lat: rowLat,
@@ -639,7 +644,7 @@ function renderGrid(dataList) {
 
         ${item.phone ? `
           <a
-            href="tel:${item.phone}"
+            href="tel:${(item.phone.split(',')[0] || item.phone).replace(/[^0-9+]/g, '')}"
             class="h-10 w-10 rounded-xl sm:rounded-2xl border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-700 hover:text-black transition flex items-center justify-center flex-shrink-0 shadow-xs"
             title="Call"
           >
