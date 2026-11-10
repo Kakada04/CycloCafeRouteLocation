@@ -393,7 +393,7 @@ function requestUserLocation() {
       filterBranches(getCurrentSearchKeyword(), currentFilter);
 
       if (isFacebookBrowser()) {
-        showNotice('Facebook In-App Browser មិនអនុញ្ញាតទីតាំងទេ។ សូមចុច ⋯ ហើយជ្រើស 🌐 «Open in external browser» (Chrome/Safari) ឬជ្រើសរើស «ខណ្ឌ» នៅខាងឆ្វេង។');
+        showNotice('Facebook In-App Browser មិនអនុញ្ញាតទីតាំងទេ។ សូមចុច ⋮ (ខាងលើស្តាំ) ហើយជ្រើស «Open in external browser» ឬជ្រើសរើស «ខណ្ឌ» នៅខាងឆ្វេង។');
         const toast = document.getElementById('facebookNoticeToast');
         if (toast) toast.classList.remove('hidden');
       } else if (error.code === error.PERMISSION_DENIED) {
