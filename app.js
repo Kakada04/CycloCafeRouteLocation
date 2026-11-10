@@ -6,6 +6,7 @@
 let branches = [];
 let promotions = [];
 let currentFilter = 'all';
+let selectedDistrict = ''; // Currently selected district filter
 let userLocation = null; // { lat, lng }
 let isNearbyActive = false;
 let isLocating = false;
@@ -143,9 +144,16 @@ function formatDistance(distKm) {
 }
 
 // Dynamically request sheet data with headers=1 to ensure all data rows are returned
-function requestSheetData(sheetName, callbackName) {
+function requestSheetData(sheetName, callbackName, gid) {
   const script = document.createElement('script');
-  script.src = `${_CONFIG._src}?sheet=${encodeURIComponent(sheetName)}&headers=1&tqx=responseHandler:${callbackName}`;
+  let url = `${_CONFIG._src}?headers=1&tqx=responseHandler:${callbackName}`;
+  if (typeof gid !== 'undefined') {
+    url += `&gid=${gid}`;
+  }
+  if (sheetName) {
+    url += `&sheet=${encodeURIComponent(sheetName)}`;
+  }
+  script.src = url;
   script.async = true;
 
   // Remove script tag immediately upon load/error to keep DOM tree clean
@@ -160,30 +168,86 @@ function handleBranchesResponse(data) {
   if (loadingEl) loadingEl.style.display = 'none';
 
   try {
-    const rows = data.table.rows;
+    const cols = (data.table && data.table.cols) ? data.table.cols : [];
+    const colMap = {};
+    cols.forEach((col, idx) => {
+      if (col && (col.label || col.id)) {
+        const label = String(col.label || col.id).toLowerCase().replace(/[^a-z0-9]/g, '');
+        colMap[label] = idx;
+      }
+    });
+
+    const getColIdx = (aliases, fallbackIdx) => {
+      for (const a of aliases) {
+        const clean = a.toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (colMap[clean] !== undefined) return colMap[clean];
+      }
+      return fallbackIdx;
+    };
+
+    const nameIdx = getColIdx(['branchname', 'name', 'branch'], 0);
+    const districtIdx = getColIdx(['district'], 1);
+    const areaIdx = getColIdx(['area', 'map', 'maps', 'location'], 2);
+    const tgIdx = getColIdx(['telegramlink', 'telegram', 'tg'], 3);
+    const phoneIdx = getColIdx(['phone', 'tel', 'call'], 4);
+    const promoIdx = getColIdx(['deliverypromo', 'promo'], 5);
+    const statusIdx = getColIdx(['status'], 6);
+    const latIdx = getColIdx(['latitude', 'lat'], 7);
+    const lngIdx = getColIdx(['longitude', 'long', 'lng'], 8);
+
+    const rows = data.table.rows || [];
     branches = rows.map((r, idx) => {
-      const c = r.c;
+      const c = r.c || [];
+      const getVal = (colIndex) => {
+        if (colIndex !== undefined && c[colIndex] && c[colIndex].v !== null && c[colIndex].v !== undefined) {
+          return String(c[colIndex].v).trim();
+        }
+        return '';
+      };
+
+      // Parse Lat / Lng directly from row
+      let rowLat = null;
+      let rowLng = null;
+      if (latIdx !== undefined && c[latIdx] && c[latIdx].v !== null && c[latIdx].v !== undefined) {
+        const parsed = parseFloat(c[latIdx].v);
+        if (!isNaN(parsed) && parsed !== 0) rowLat = parsed;
+      }
+      if (lngIdx !== undefined && c[lngIdx] && c[lngIdx].v !== null && c[lngIdx].v !== undefined) {
+        const parsed = parseFloat(c[lngIdx].v);
+        if (!isNaN(parsed) && parsed !== 0) rowLng = parsed;
+      }
+
       const b = {
         id: idx + 1,
-        name: (c[0] && c[0].v !== null) ? String(c[0].v).trim() : '',
-        area: (c[1] && c[1].v !== null) ? String(c[1].v).trim() : '',
-        telegram: (c[2] && c[2].v !== null) ? String(c[2].v).trim() : '#',
-        phone: (c[3] && c[3].v !== null) ? String(c[3].v).trim() : '',
-        promo: (c[4] && c[4].v !== null) ? String(c[4].v).trim() : '',
-        status: (c[5] && c[5].v !== null) ? String(c[5].v).trim() : 'Open',
+        name: getVal(nameIdx),
+        district: getVal(districtIdx),
+        area: getVal(areaIdx),
+        telegram: getVal(tgIdx) || '#',
+        phone: getVal(phoneIdx),
+        promo: getVal(promoIdx),
+        status: getVal(statusIdx) || 'Open',
+        lat: rowLat,
+        lng: rowLng,
         distance: null
       };
 
-      const coords = getBranchCoordinates(b);
-      if (coords) {
-        b.lat = coords.lat;
-        b.lng = coords.lng;
+      // If the sheet row was missing lat/lng, fallback to URL regex or lookup maps
+      if (b.lat === null || b.lng === null) {
+        const coords = getBranchCoordinates(b);
+        if (coords) {
+          b.lat = coords.lat;
+          b.lng = coords.lng;
+        }
       }
+
       return b;
     }).filter(b => {
       const lower = b.name.toLowerCase();
       return b.name.length > 0 && lower !== 'branch_name' && lower !== 'name';
     });
+
+    // Populate District Filter dynamically from branches
+    populateDistrictFilter(branches);
 
     // If user location was already granted earlier, calculate distances now
     if (userLocation) {
@@ -328,7 +392,11 @@ function requestUserLocation() {
       // Restore the branch grid from the loading screen
       filterBranches(getCurrentSearchKeyword(), currentFilter);
 
-      if (error.code === error.PERMISSION_DENIED) {
+      if (isFacebookBrowser()) {
+        showNotice('Facebook In-App Browser មិនអនុញ្ញាតឲ្យបើកទីតាំង (Location) ទេ។ សូមបើកក្នុង Chrome ឬ Safari ឬជ្រើសរើស «ខណ្ឌ» នៅខាងឆ្វេង។');
+        const toast = document.getElementById('facebookNoticeToast');
+        if (toast) toast.classList.remove('hidden');
+      } else if (error.code === error.PERMISSION_DENIED) {
         showNotice('មិនអាចទទួលបានទីតាំងទេ។ សូមចុចអនុញ្ញាត Location (Allow) លើ Browser Settings របស់អ្នក ដើម្បីស្វែងរកសាខាជិតបំផុត។');
       } else if (error.code === error.POSITION_UNAVAILABLE) {
         showNotice('មិនអាចស្វែងរកទីតាំងរបស់អ្នកបានទេ។ សូមពិនិត្យមើល GPS ឬសេវាអ៊ីនធឺណិត។');
@@ -525,10 +593,17 @@ function renderGrid(dataList) {
       <p class="text-[11px] font-light text-zinc-500 leading-relaxed line-clamp-2 mt-1">${item.area}</p>
     ` : '');
 
+    const districtContent = item.district ? `
+      <p class="text-[11px] font-light text-zinc-500 mt-0.5 line-clamp-1">${item.district}</p>
+    ` : '';
+
     card.innerHTML = `
       <div>
         <div class="flex items-start justify-between gap-2 mb-1">
-          <h3 class="text-sm sm:text-base font-semibold text-zinc-950 tracking-tight leading-snug">${item.name}</h3>
+          <div class="flex-1 min-w-0">
+            <h3 class="text-sm sm:text-base font-semibold text-zinc-950 tracking-tight leading-snug">${item.name}</h3>
+            ${districtContent}
+          </div>
           <div class="flex items-center gap-1.5 flex-shrink-0 pt-0.5">
             ${distanceBadge}
             ${statusBadge}
@@ -612,12 +687,126 @@ function setFilter(type) {
   filterBranches(getCurrentSearchKeyword(), currentFilter);
 }
 
+function populateDistrictFilter(branchList) {
+  const selectEl = document.getElementById('districtFilter');
+  if (!selectEl) return;
+
+  const districtCountMap = {};
+
+  branchList.forEach(b => {
+    const distRaw = b.district || '';
+    if (!distRaw) return;
+    const parts = distRaw.split(/[/,]+/).map(p => p.trim()).filter(Boolean);
+    parts.forEach(part => {
+      districtCountMap[part] = (districtCountMap[part] || 0) + 1;
+    });
+  });
+
+  const sortedDistricts = Object.keys(districtCountMap).sort((a, b) => a.localeCompare(b, 'km'));
+
+  selectEl.innerHTML = `<option value="">ខណ្ឌទាំងអស់ (${branchList.length})</option>`;
+  sortedDistricts.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d;
+    const prefix = (d.startsWith('ខណ្ឌ') || d.startsWith('ក្រុង')) ? '' : 'ខណ្ឌ ';
+    opt.textContent = `${prefix}${d} (${districtCountMap[d]})`;
+    if (d === selectedDistrict) {
+      opt.selected = true;
+    }
+    selectEl.appendChild(opt);
+  });
+}
+
+function handleDistrictChange() {
+  const selectEl = document.getElementById('districtFilter');
+  selectedDistrict = selectEl ? selectEl.value.trim() : '';
+  filterBranches(getCurrentSearchKeyword(), currentFilter);
+}
+
+function isFacebookBrowser() {
+  const ua = navigator.userAgent || navigator.vendor || window.opera || '';
+  return /FBAN|FBAV|FB_IAB|FB4A|FBIOS|Instagram/i.test(ua);
+}
+
+function initFacebookNotice() {
+  if (!isFacebookBrowser()) return;
+  if (sessionStorage.getItem('fb_notice_dismissed') === 'true') return;
+
+  const toast = document.getElementById('facebookNoticeToast');
+  if (toast) {
+    toast.classList.remove('hidden');
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+      window.lucide.createIcons();
+    }
+  }
+}
+
+function dismissFacebookNotice() {
+  const toast = document.getElementById('facebookNoticeToast');
+  if (toast) toast.classList.add('hidden');
+  sessionStorage.setItem('fb_notice_dismissed', 'true');
+}
+
+function copyAppUrl() {
+  const url = window.location.origin + window.location.pathname;
+  const updateLabel = () => {
+    const textEl = document.getElementById('copyLinkText');
+    if (textEl) {
+      textEl.textContent = 'បានចម្លង!';
+      setTimeout(() => {
+        textEl.textContent = 'ចម្លងតំណភ្ជាប់';
+      }, 2500);
+    }
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(updateLabel).catch(() => {
+      fallbackCopy(url);
+      updateLabel();
+    });
+  } else {
+    fallbackCopy(url);
+    updateLabel();
+  }
+}
+
+function fallbackCopy(text) {
+  const input = document.createElement('input');
+  input.value = text;
+  input.style.position = 'fixed';
+  input.style.opacity = '0';
+  document.body.appendChild(input);
+  input.select();
+  try {
+    document.execCommand('copy');
+  } catch (e) {
+    console.warn('Copy failed:', e);
+  }
+  document.body.removeChild(input);
+}
+
 function filterBranches(keyword, filterType) {
   let filtered = branches.filter(b => {
     const mapInfo = getMapInfo(b.area, b.name);
-    return b.name.toLowerCase().includes(keyword) ||
+    const matchesKeyword = !keyword ||
+      b.name.toLowerCase().includes(keyword) ||
+      (b.district && b.district.toLowerCase().includes(keyword)) ||
       b.area.toLowerCase().includes(keyword) ||
       mapInfo.label.toLowerCase().includes(keyword);
+
+    if (!matchesKeyword) return false;
+
+    if (selectedDistrict) {
+      const d = selectedDistrict.toLowerCase();
+      const bDistrict = (b.district || '').toLowerCase();
+      const bArea = (b.area || '').toLowerCase();
+      const bName = (b.name || '').toLowerCase();
+      if (!bDistrict.includes(d) && !bArea.includes(d) && !bName.includes(d)) {
+        return false;
+      }
+    }
+
+    return true;
   });
 
   if (filterType === 'open') {
@@ -650,16 +839,21 @@ window.setFilter = setFilter;
 window.handleNearbyClick = handleNearbyClick;
 window.resetNearbySort = resetNearbySort;
 window.dismissLocationNotice = dismissLocationNotice;
+window.handleDistrictChange = handleDistrictChange;
+window.dismissFacebookNotice = dismissFacebookNotice;
+window.copyAppUrl = copyAppUrl;
 
 // Initialize icons and data fetching cleanly
 let isInitialized = false;
 function initApp() {
   if (isInitialized) return;
   isInitialized = true;
+  initFacebookNotice();
   if (window.lucide && typeof window.lucide.createIcons === 'function') {
     window.lucide.createIcons();
   }
-  requestSheetData('Sheet1', 'handleBranchesResponse');
+  // Query with gid=0 and sheet=Branches to guarantee resilient fetching regardless of tab rename
+  requestSheetData('Branches', 'handleBranchesResponse', 0);
   requestSheetData('Promotions', 'handlePromotionsResponse');
 }
 
